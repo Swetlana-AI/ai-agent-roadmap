@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Agent Roadmap — Build Your Plan | Swetlana AI</title>
+<meta name="description" content="Build a personalized AI agent roadmap for your small business in 5 steps. Get tailored tool recommendations for FAQs, lead capture, WhatsApp bots, and more." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- JSON-LD FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the main task an AI agent can handle for a small business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The two most common tasks are answering FAQs (handling repeat questions about hours, pricing, policies, and shipping) and capturing leads (qualifying visitors, collecting contact details, and booking calls or demos). FAQ bots are built around knowledge retrieval, while lead-capture bots are built around form-filling and conditional flows."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I deploy my AI agent on my website or on WhatsApp?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Website widgets are the fastest no-code path to launch — tools like Chatbase or InsertChat let you deploy in an afternoon with a single script tag. WhatsApp requires an approved Business API provider like ManyChat or Wati to bridge your bot to the platform, with a 1–2 week onboarding window for Meta verification, but you meet customers in the app they already check every day."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I give my AI agent knowledge about my business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you have a clean website, use scraping or URL import — most platforms crawl your domain automatically and re-sync when you update pages. For PDFs and documents, use vector uploads: drag and drop files and the platform handles embeddings and semantic search under the hood. If you have nothing documented yet, start with a Google Doc containing your top 20 FAQs before evaluating any tool."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should happen when my AI agent cannot answer a question?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You need a human handoff, also called an escape hatch. Email handoffs are simple to set up but conversion decays fast while prospects wait for replies. A direct Calendly or Cal.com booking link is the single highest-converting handoff for small businesses — it turns a curious visitor into a scheduled call with zero delay and pre-qualifies the prospect by commitment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which no-code tools are best for building an AI agent for a small business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For website widgets, Chatbase and InsertChat are the fastest no-code options with built-in content ingestion. For WhatsApp and social channels, ManyChat and Wati provide the API bridge plus a visual builder. For scheduling handoffs, Calendly or Cal.com embed cleanly. For lead routing, connect via Zapier or Make to push qualified leads into a CRM like HubSpot or Pipedrive, or into a Google Sheet."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --bg-0: #0a0a14;
+    --bg-1: #12121f;
+    --bg-2: #1a1a2e;
+    --bg-3: #22223d;
+    --border-1: #2a2a45;
+    --border-2: #363657;
+
+    --text-hi: #f5f5fa;
+    --text-mid: #b8b8d4;
+    --text-lo: #7878a0;
+    --text-muted: #5a5a7a;
+
+    --violet: #a855f7;
+    --violet-glow: rgba(168, 85, 247, 0.4);
+    --pink: #ec4899;
+    --pink-glow: rgba(236, 72, 153, 0.4);
+    --cyan: #06b6d4;
+    --cyan-glow: rgba(6, 182, 212, 0.4);
+    --amber: #f59e0b;
+    --amber-glow: rgba(245, 158, 11, 0.4);
+    --emerald: #10b981;
+    --emerald-glow: rgba(16, 185, 129, 0.4);
+
+    --primary: #8b5cf6;
+    --primary-hover: #a78bfa;
+    --primary-glow: rgba(139, 92, 246, 0.5);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-0);
+    color: var(--text-hi);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(168, 85, 247, 0.15), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(236, 72, 153, 0.12), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(6, 182, 212, 0.1), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app { min-height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
+
+  .header {
+    background: rgba(18, 18, 31, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-1);
+    padding: 18px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+
+  .brand-logo {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    box-shadow: 0 4px 20px var(--violet-glow), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    flex-shrink: 0;
+  }
+
+  .brand-logo svg { width: 20px; height: 20px; }
+
+  .brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+
+  .brand-title { font-weight: 700; font-size: 15px; color: var(--text-hi); letter-spacing: -0.01em; }
+
+  .brand-subtitle { font-size: 12px; color: var(--text-lo); font-weight: 500; }
+
+  .brand-subtitle a {
+    color: var(--pink);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .brand-subtitle a:hover { color: var(--violet); }
+
+  .step-indicator {
+    font-size: 13px;
+    color: var(--text-lo);
+    font-weight: 500;
+    padding: 6px 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--border-1);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .step-indicator strong {
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+  }
+
+  .progress-wrap {
+    background: rgba(18, 18, 31, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-1);
+  }
+
+  .progress-inner { max-width: 900px; margin: 0 auto; }
+
+  .progress-track {
+    height: 6px;
+    background: var(--bg-2);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-1);
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--violet), var(--pink), var(--amber));
+    background-size: 200% 100%;
+    border-radius: 999px;
+    transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    width: 20%;
+    box-shadow: 0 0 20px var(--violet-glow);
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .progress-dots { display: flex; justify-content: space-between; margin-top: 16px; gap: 8px; }
+
+  .progress-dot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: default;
+  }
+
+  .progress-dot-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: 2px solid var(--border-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-lo);
+    transition: all 0.3s ease;
+  }
+
+  .progress-dot[data-idx="1"].active .progress-dot-circle,
+  .progress-dot[data-idx="1"].completed .progress-dot-circle {
+    background: var(--violet); border-color: var(--violet); color: white;
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15), 0 0 20px var(--violet-glow);
+  }
+  .progress-dot[data-idx="2"].active .progress-dot-circle,
+  .progress-dot[data-idx="2"].completed .progress-dot-circle {
+    background: var(--pink); border-color: var(--pink); color: white;
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15), 0 0 20px var(--pink-glow);
+  }
+  .progress-dot[data-idx="3"].active .progress-dot-circle,
+  .progress-dot[data-idx="3"].completed .progress-dot-circle {
+    background: var(--cyan); border-color: var(--cyan); color: white;
+    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15), 0 0 20px var(--cyan-glow);
+  }
+  .progress-dot[data-idx="4"].active .progress-dot-circle,
+  .progress-dot[data-idx="4"].completed .progress-dot-circle {
+    background: var(--amber); border-color: var(--amber); color: white;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15), 0 0 20px var(--amber-glow);
+  }
+  .progress-dot[data-idx="5"].active .progress-dot-circle,
+  .progress-dot[data-idx="5"].completed .progress-dot-circle {
+    background: var(--emerald); border-color: var(--emerald); color: white;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15), 0 0 20px var(--emerald-glow);
+  }
+
+  .progress-dot-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .progress-dot.active .progress-dot-label,
+  .progress-dot.completed .progress-dot-label {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
+
+  /* ===== Explainer ===== */
+  .explainer-wrap {
+    padding: 28px 24px 0;
+  }
+
+  .explainer-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .explainer {
+    background: linear-gradient(145deg, rgba(168, 85, 247, 0.06), rgba(236, 72, 153, 0.04) 40%, rgba(6, 182, 212, 0.05));
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .explainer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--pink), var(--cyan), var(--amber), var(--emerald));
+    opacity: 0.7;
+  }
+
+  .explainer-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    padding: 18px 22px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s ease;
+  }
+
+  .explainer-toggle:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .explainer-toggle-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .explainer-spark {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+  }
+
+  .explainer-spark svg { width: 17px; height: 17px; }
+
+  .explainer-label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    min-width: 0;
+  }
+
+  .explainer-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-hi);
+    letter-spacing: -0.01em;
+  }
+
+  .explainer-hint {
+    font-size: 12.5px;
+    color: var(--text-lo);
+    font-weight: 500;
+  }
+
+  .explainer-chevron {
+    width: 20px; height: 20px;
+    color: var(--text-lo);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    flex-shrink: 0;
+  }
+
+  .explainer.open .explainer-chevron {
+    transform: rotate(180deg);
+  }
+
+  .explainer-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .explainer.open .explainer-body {
+    max-height: 1400px;
+  }
+
+  .explainer-content {
+    padding: 4px 22px 24px;
+    border-top: 1px solid var(--border-1);
+    margin-top: -1px;
+  }
+
+  .explainer-content > p:first-child {
+    padding-top: 20px;
+  }
+
+  .explainer-content p {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .explainer-content p strong {
+    color: var(--text-hi);
+    font-weight: 600;
+  }
+
+  .explainer-content p.lead {
+    font-size: 15.5px;
+    color: var(--text-hi);
+    margin-bottom: 22px;
+  }
+
+  .explainer-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 22px 0 14px;
+    color: var(--text-mid);
+  }
+
+  .explainer-section-title::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    box-shadow: 0 0 8px var(--violet-glow);
+  }
+
+  .mechanics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .mechanic {
+    background: var(--bg-2);
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .mechanic:hover {
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+  }
+
+  .mechanic-num {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .mechanic:nth-child(1) .mechanic-num { background: linear-gradient(135deg, var(--violet), #7c3aed); box-shadow: 0 2px 8px var(--violet-glow); }
+  .mechanic:nth-child(2) .mechanic-num { background: linear-gradient(135deg, var(--pink), #db2777); box-shadow: 0 2px 8px var(--pink-glow); }
+  .mechanic:nth-child(3) .mechanic-num { background: linear-gradient(135deg, var(--cyan), #0891b2); box-shadow: 0 2px 8px var(--cyan-glow); }
+  .mechanic:nth-child(4) .mechanic-num { background: linear-gradient(135deg, var(--amber), #d97706); box-shadow: 0 2px 8px var(--amber-glow); }
+
+  .mechanic-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .mechanic-icon svg { width: 14px; height: 14px; }
+  .mechanic:nth-child(1) .mechanic-icon { color: #c084fc; }
+  .mechanic:nth-child(2) .mechanic-icon { color: #f472b6; }
+  .mechanic:nth-child(3) .mechanic-icon { color: #22d3ee; }
+  .mechanic:nth-child(4) .mechanic-icon { color: #fbbf24; }
+
+  .mechanic-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .mechanic-desc {
+    font-size: 12px;
+    color: var(--text-lo);
+    line-height: 1.5;
+  }
+
+  .mechanics-flow {
+    font-size: 12.5px;
+    color: var(--text-lo);
+    font-style: italic;
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--cyan);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  .mechanics-flow strong { color: var(--cyan); font-style: normal; font-weight: 700; }
+
+  .main { flex: 1; padding: 40px 24px 60px; }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  .step { display: none; animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+  .step.active { display: block; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-header { margin-bottom: 32px; }
+
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    border: 1px solid;
+  }
+
+  .step[data-step="1"] .step-badge { background: rgba(168, 85, 247, 0.12); color: #c084fc; border-color: rgba(168, 85, 247, 0.3); }
+  .step[data-step="2"] .step-badge { background: rgba(236, 72, 153, 0.12); color: #f472b6; border-color: rgba(236, 72, 153, 0.3); }
+  .step[data-step="3"] .step-badge { background: rgba(6, 182, 212, 0.12); color: #22d3ee; border-color: rgba(6, 182, 212, 0.3); }
+  .step[data-step="4"] .step-badge { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
+
+  .step-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text-hi);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .step-description {
+    font-size: 15px;
+    color: var(--text-mid);
+    max-width: 560px;
+  }
+
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .options.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+  .option {
+    background: var(--bg-1);
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    color: inherit;
+  }
+
+  .option:hover {
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+    background: var(--bg-2);
+  }
+
+  .step[data-step="1"] .option:hover { border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15); }
+  .step[data-step="1"] .option.selected { border-color: var(--violet); background: rgba(168, 85, 247, 0.08); box-shadow: 0 0 0 1px var(--violet), 0 8px 30px rgba(168, 85, 247, 0.2); }
+  .step[data-step="1"] .option.selected .option-icon { background: linear-gradient(135deg, var(--violet), #7c3aed); color: white; border-color: transparent; }
+  .step[data-step="1"] .option.selected .option-check { background: var(--violet); }
+
+  .step[data-step="2"] .option:hover { border-color: rgba(236, 72, 153, 0.5); box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15); }
+  .step[data-step="2"] .option.selected { border-color: var(--pink); background: rgba(236, 72, 153, 0.08); box-shadow: 0 0 0 1px var(--pink), 0 8px 30px rgba(236, 72, 153, 0.2); }
+  .step[data-step="2"] .option.selected .option-icon { background: linear-gradient(135deg, var(--pink), #db2777); color: white; border-color: transparent; }
+  .step[data-step="2"] .option.selected .option-check { background: var(--pink); }
+
+  .step[data-step="3"] .option:hover { border-color: rgba(6, 182, 212, 0.5); box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15); }
+  .step[data-step="3"] .option.selected { border-color: var(--cyan); background: rgba(6, 182, 212, 0.08); box-shadow: 0 0 0 1px var(--cyan), 0 8px 30px rgba(6, 182, 212, 0.2); }
+  .step[data-step="3"] .option.selected .option-icon { background: linear-gradient(135deg, var(--cyan), #0891b2); color: white; border-color: transparent; }
+  .step[data-step="3"] .option.selected .option-check { background: var(--cyan); }
+
+  .step[data-step="4"] .option:hover { border-color: rgba(245, 158, 11, 0.5); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.15); }
+  .step[data-step="4"] .option.selected { border-color: var(--amber); background: rgba(245, 158, 11, 0.08); box-shadow: 0 0 0 1px var(--amber), 0 8px 30px rgba(245, 158, 11, 0.2); }
+  .step[data-step="4"] .option.selected .option-icon { background: linear-gradient(135deg, var(--amber), #d97706); color: white; border-color: transparent; }
+  .step[data-step="4"] .option.selected .option-check { background: var(--amber); }
+
+  .option-icon {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-1);
+    color: var(--text-mid);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .option-icon svg { width: 20px; height: 20px; }
+
+  .option-title { font-size: 16px; font-weight: 600; color: var(--text-hi); line-height: 1.3; }
+  .option-hint { font-size: 13px; color: var(--text-lo); line-height: 1.5; }
+
+  .option-check {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease;
+  }
+
+  .option-check svg { width: 12px; height: 12px; }
+  .option.selected .option-check { opacity: 1; transform: scale(1); }
+
+  .analysis {
+    background: var(--bg-1);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    border: 1px solid var(--border-1);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-width: 0;
+    position: relative;
+  }
+
+  .analysis::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    padding: 1px;
+    background: linear-gradient(135deg, var(--violet), var(--pink), var(--cyan));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .analysis.visible {
+    opacity: 1;
+    max-height: 600px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-width: 1px;
+  }
+
+  .analysis.visible::before { opacity: 0.4; }
+
+  .analysis-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+
+  .analysis-icon {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px var(--violet-glow);
+  }
+
+  .analysis-icon svg { width: 15px; height: 15px; }
+
+  .analysis-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .analysis-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .analysis-body { font-size: 14.5px; color: var(--text-mid); line-height: 1.7; }
+  .analysis-body strong { color: var(--text-hi); font-weight: 600; }
+
+  .analysis-body code {
+    background: var(--bg-3);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family: 'SF Mono', Monaco, Consolas, monospace;
+    color: var(--cyan);
+    font-weight: 500;
+    border: 1px solid var(--border-1);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .btn {
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.005em;
+  }
+
+  .btn svg { width: 16px; height: 16px; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    color: white;
+    box-shadow: 0 4px 20px var(--violet-glow);
+    position: relative;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px var(--violet-glow);
+    filter: brightness(1.1);
+  }
+
+  .btn-primary:disabled {
+    background: var(--bg-3);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    background: var(--bg-2);
+    color: var(--text-mid);
+    border: 1px solid var(--border-1);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--border-2);
+    background: var(--bg-3);
+    color: var(--text-hi);
+  }
+
+  .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .summary-hero { text-align: center; margin-bottom: 32px; }
+
+  .summary-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .summary-badge svg { width: 14px; height: 14px; }
+
+  .summary-title {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 10%, var(--violet) 50%, var(--pink) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .summary-subtitle {
+    font-size: 16px;
+    color: var(--text-mid);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .summary-card {
+    background: var(--bg-1);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    border: 1px solid var(--border-1);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--violet), var(--pink), var(--cyan), var(--amber), var(--emerald));
+  }
+
+  .summary-section {
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--border-1);
+  }
+
+  .summary-section:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .summary-row { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+  .summary-row:last-child { margin-bottom: 0; }
+
+  .summary-row-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: white;
+  }
+
+  .summary-row-icon.c-violet { background: linear-gradient(135deg, var(--violet), #7c3aed); box-shadow: 0 4px 14px var(--violet-glow); }
+  .summary-row-icon.c-pink { background: linear-gradient(135deg, var(--pink), #db2777); box-shadow: 0 4px 14px var(--pink-glow); }
+  .summary-row-icon.c-cyan { background: linear-gradient(135deg, var(--cyan), #0891b2); box-shadow: 0 4px 14px var(--cyan-glow); }
+  .summary-row-icon.c-amber { background: linear-gradient(135deg, var(--amber), #d97706); box-shadow: 0 4px 14px var(--amber-glow); }
+
+  .summary-row-icon svg { width: 16px; height: 16px; }
+
+  .summary-row-content { flex: 1; min-width: 0; }
+
+  .summary-row-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .summary-row-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-hi);
+    line-height: 1.4;
+  }
+
+  .summary-heading {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-hi);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .summary-heading-dot {
+    width: 8px; height: 8px;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--violet-glow);
+  }
+
+  .tool-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .tool-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-1);
+    transition: all 0.2s ease;
+  }
+
+  .tool-item:hover { border-color: var(--border-2); background: var(--bg-3); }
+
+  .tool-item-icon {
+    width: 34px; height: 34px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-1);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan);
+    flex-shrink: 0;
+  }
+
+  .tool-item-icon svg { width: 15px; height: 15px; }
+
+  .tool-item-body { flex: 1; min-width: 0; }
+
+  .tool-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-hi);
+    margin-bottom: 2px;
+  }
+
+  .tool-item-desc { font-size: 12.5px; color: var(--text-lo); line-height: 1.45; }
+
+  .next-steps { display: flex; flex-direction: column; gap: 12px; }
+
+  .next-step { display: flex; gap: 12px; align-items: flex-start; padding: 2px 0; }
+
+  .next-step-number {
+    width: 26px; height: 26px;
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .next-step:nth-child(5n+1) .next-step-number { background: linear-gradient(135deg, var(--violet), #7c3aed); box-shadow: 0 2px 10px var(--violet-glow); }
+  .next-step:nth-child(5n+2) .next-step-number { background: linear-gradient(135deg, var(--pink), #db2777); box-shadow: 0 2px 10px var(--pink-glow); }
+  .next-step:nth-child(5n+3) .next-step-number { background: linear-gradient(135deg, var(--cyan), #0891b2); box-shadow: 0 2px 10px var(--cyan-glow); }
+  .next-step:nth-child(5n+4) .next-step-number { background: linear-gradient(135deg, var(--amber), #d97706); box-shadow: 0 2px 10px var(--amber-glow); }
+  .next-step:nth-child(5n+5) .next-step-number { background: linear-gradient(135deg, var(--emerald), #059669); box-shadow: 0 2px 10px var(--emerald-glow); }
+
+  .next-step-text { font-size: 14px; color: var(--text-mid); line-height: 1.6; flex: 1; }
+  .next-step-text strong { color: var(--text-hi); font-weight: 600; }
+
+  .summary-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+
+  .btn-copy {
+    flex: 1; min-width: 180px;
+    justify-content: center;
+    padding: 14px 22px;
+    font-size: 15px;
+  }
+
+  .btn-restart {
+    flex: 1; min-width: 140px;
+    justify-content: center;
+    padding: 14px 22px;
+    font-size: 15px;
+  }
+
+  .btn-copy.copied {
+    background: linear-gradient(135deg, var(--emerald), #059669);
+    box-shadow: 0 4px 20px var(--emerald-glow);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-3);
+    color: var(--text-hi);
+    padding: 12px 22px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--border-2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .toast svg { width: 16px; height: 16px; color: var(--emerald); }
+
+  @media (max-width: 720px) {
+    .header { padding: 14px 16px; }
+    .brand-subtitle { display: none; }
+    .progress-wrap { padding: 16px; }
+    .progress-dot-label { display: none; }
+    .explainer-wrap { padding: 20px 16px 0; }
+    .explainer-toggle { padding: 14px 16px; }
+    .explainer-content { padding: 4px 16px 20px; }
+    .explainer-hint { display: none; }
+    .mechanics { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .main { padding: 28px 16px 48px; }
+    .step-title { font-size: 24px; }
+    .step-description { font-size: 14px; }
+    .options { grid-template-columns: 1fr; gap: 12px; }
+    .options.triple { grid-template-columns: 1fr; }
+    .option { padding: 18px; }
+    .summary-title { font-size: 26px; }
+    .summary-subtitle { font-size: 14px; }
+    .summary-card { padding: 22px; border-radius: var(--radius-lg); }
+    .nav { flex-direction: column-reverse; }
+    .nav .btn { width: 100%; justify-content: center; }
+    .summary-actions { flex-direction: column; }
+    .btn-copy, .btn-restart { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 8V4H8"/>
+            <rect width="16" height="12" x="4" y="8" rx="2"/>
+            <path d="M2 14h2M20 14h2M15 13v2M9 13v2"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">AI Agent Roadmap</span>
+          <span class="brand-subtitle">by <a href="https://swetlanaai.com" target="_blank" rel="noopener">Swetlana AI</a></span>
+        </div>
+      </div>
+      <div class="step-indicator">
+        Step <strong id="stepNum">1</strong> of 5
+      </div>
+    </div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-inner">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-dots" id="progressDots"></div>
+    </div>
+  </div>
+
+  <div class="explainer-wrap">
+    <div class="explainer-inner">
+      <div class="explainer" id="explainer">
+        <button class="explainer-toggle" id="explainerToggle" aria-expanded="false" aria-controls="explainerBody">
+          <div class="explainer-toggle-left">
+            <div class="explainer-spark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4"/>
+                <path d="M12 8h.01"/>
+              </svg>
+            </div>
+            <div class="explainer-label">
+              <span class="explainer-title">What is this &amp; how does an AI agent actually work?</span>
+              <span class="explainer-hint">A 2-minute primer before you start</span>
+            </div>
+          </div>
+          <svg class="explainer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="explainer-body" id="explainerBody">
+          <div class="explainer-content">
+            <p class="lead">This tool turns the messy decision of "I should probably get an AI agent" into a concrete, personalized plan — the right tools, the right channel, the right way to feed it knowledge, and a clear set of next steps. Answer five quick questions and you'll walk away with a roadmap you can actually execute.</p>
+
+            <p>An <strong>AI agent</strong> (or chatbot, or support bot — same thing) is software that talks to your customers on your behalf. It answers questions, qualifies leads, books calls, and routes anything it can't handle to a human. For a small business, a good one runs 24/7, speaks every language your customers do, and handles the repetitive conversations that eat your evenings.</p>
+
+            <div class="explainer-section-title">The Four Mechanics of Every Agent</div>
+
+            <div class="mechanics">
+              <div class="mechanic">
+                <span class="mechanic-num">1</span>
+                <div class="mechanic-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="mechanic-name">Channel</div>
+                <div class="mechanic-desc">Where the conversation lives — your website, WhatsApp, Instagram, etc.</div>
+              </div>
+              <div class="mechanic">
+                <span class="mechanic-num">2</span>
+                <div class="mechanic-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7-7"/></svg>
+                </div>
+                <div class="mechanic-name">Brain</div>
+                <div class="mechanic-desc">The LLM (GPT, Claude, Gemini) that understands and generates responses.</div>
+              </div>
+              <div class="mechanic">
+                <span class="mechanic-num">3</span>
+                <div class="mechanic-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+                </div>
+                <div class="mechanic-name">Knowledge</div>
+                <div class="mechanic-desc">Your content — website, PDFs, FAQs — fed to the brain so it knows your business.</div>
+              </div>
+              <div class="mechanic">
+                <span class="mechanic-num">4</span>
+                <div class="mechanic-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+                </div>
+                <div class="mechanic-name">Actions</div>
+                <div class="mechanic-desc">What it can do — collect emails, book meetings, hand off to a human.</div>
+              </div>
+            </div>
+
+            <div class="mechanics-flow">
+              <strong>The flow:</strong> A customer sends a message through the <em>channel</em>. The <em>brain</em> reads it, checks your <em>knowledge</em> for relevant facts, writes a reply, and triggers an <em>action</em> if needed (like saving a lead or sending a Calendly link). Every platform — Chatbase, ManyChat, Voiceflow — is just a different wrapper around these same four pieces.
+            </div>
+
+            <div class="explainer-section-title">What You Don't Need to Worry About</div>
+
+            <p>You don't need to train a model, write code, or understand vector databases to ship something useful. Modern no-code platforms handle <code>embeddings</code>, retrieval, and hosting for you — your job is to make good decisions about <strong>what the bot does, where it lives, and what it knows</strong>. That's exactly what this wizard walks you through.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="step active" data-step="1">
+        <div class="step-header">
+          <span class="step-badge">◆ Goal</span>
+          <h1 class="step-title">What is the main task?</h1>
+          <p class="step-description">Start by defining the primary job your AI agent will handle. This shapes every other decision on your roadmap.</p>
+        </div>
+        <div class="options" data-options="goal">
+          <button class="option" data-value="faq">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <path d="M12 17h.01"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+            </div>
+            <div class="option-title">Answering FAQs</div>
+            <div class="option-hint">Handle repeat questions about hours, pricing, policies, shipping.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+          <button class="option" data-value="leads">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <line x1="19" y1="8" x2="19" y2="14"/>
+                <line x1="22" y1="11" x2="16" y2="11"/>
+              </svg>
+            </div>
+            <div class="option-title">Capturing Leads</div>
+            <div class="option-hint">Qualify visitors, collect contact details, book calls or demos.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+        </div>
+        <div class="analysis" data-analysis="goal"></div>
+        <div class="nav">
+          <button class="btn btn-secondary" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary btn-next" disabled>
+            Continue
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="step" data-step="2">
+        <div class="step-header">
+          <span class="step-badge">◆ Channel</span>
+          <h1 class="step-title">Where will customers find it?</h1>
+          <p class="step-description">The deployment channel determines tooling complexity and the no-code vs. API setup path.</p>
+        </div>
+        <div class="options" data-options="channel">
+          <button class="option" data-value="website">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18"/>
+                <path d="M9 21V9"/>
+              </svg>
+            </div>
+            <div class="option-title">Website Widget</div>
+            <div class="option-hint">Embedded chat bubble on your site — fastest to deploy.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+          <button class="option" data-value="whatsapp">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </div>
+            <div class="option-title">WhatsApp / Social</div>
+            <div class="option-hint">Meet customers on WhatsApp, Instagram or Messenger.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+        </div>
+        <div class="analysis" data-analysis="channel"></div>
+        <div class="nav">
+          <button class="btn btn-secondary btn-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary btn-next" disabled>
+            Continue
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="step" data-step="3">
+        <div class="step-header">
+          <span class="step-badge">◆ Knowledge Source</span>
+          <h1 class="step-title">What info do you already have?</h1>
+          <p class="step-description">Your existing content fuels the agent's brain. The format of that content drives the ingestion method.</p>
+        </div>
+        <div class="options triple" data-options="knowledge">
+          <button class="option" data-value="website">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="option-title">A clean website</div>
+            <div class="option-hint">Well-organized pages with clear content and structure.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+          <button class="option" data-value="pdfs">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="9" y1="15" x2="15" y2="15"/>
+                <line x1="9" y1="11" x2="15" y2="11"/>
+              </svg>
+            </div>
+            <div class="option-title">PDFs / Docs</div>
+            <div class="option-hint">Manuals, brochures, policies, spreadsheets, transcripts.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+          <button class="option" data-value="nothing">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <div class="option-title">Nothing yet</div>
+            <div class="option-hint">Starting fresh — no documented content to work from.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+        </div>
+        <div class="analysis" data-analysis="knowledge"></div>
+        <div class="nav">
+          <button class="btn btn-secondary btn-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary btn-next" disabled>
+            Continue
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="step" data-step="4">
+        <div class="step-header">
+          <span class="step-badge">◆ Human Handoff</span>
+          <h1 class="step-title">What happens when the AI is stuck?</h1>
+          <p class="step-description">Every agent hits edge cases. Your "escape hatch" is where AI hands off to a human — and where real conversions happen.</p>
+        </div>
+        <div class="options" data-options="handoff">
+          <button class="option" data-value="email">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="option-title">Send me an Email</div>
+            <div class="option-hint">AI captures the query and emails you a transcript to reply to.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+          <button class="option" data-value="calendly">
+            <div class="option-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div class="option-title">Link to my Calendly</div>
+            <div class="option-hint">AI drops a scheduling link so prospects book directly.</div>
+            <div class="option-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </button>
+        </div>
+        <div class="analysis" data-analysis="handoff"></div>
+        <div class="nav">
+          <button class="btn btn-secondary btn-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary btn-next" disabled>
+            Generate Roadmap
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="step" data-step="5">
+        <div class="summary-hero">
+          <span class="summary-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Roadmap Ready
+          </span>
+          <h1 class="summary-title">Your AI Agent Roadmap</h1>
+          <p class="summary-subtitle">A tailored plan based on your business. Use it as your blueprint to get to launch.</p>
+        </div>
+
+        <div class="summary-card" id="summaryCard"></div>
+
+        <div class="summary-actions">
+          <button class="btn btn-primary btn-copy" id="btnCopy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span>Copy Roadmap</span>
+          </button>
+          <button class="btn btn-secondary btn-restart" id="btnRestart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+            Start Over
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastText">Roadmap copied to clipboard</span>
+  </div>
+
+</div>
+
+<script>
+  const STEPS = [
+    { key: 'goal', label: 'Goal' },
+    { key: 'channel', label: 'Channel' },
+    { key: 'knowledge', label: 'Knowledge' },
+    { key: 'handoff', label: 'Handoff' },
+    { key: 'summary', label: 'Summary' }
+  ];
+
+  const ANALYSIS = {
+    goal: {
+      faq: {
+        title: 'You need a Knowledge-base driven bot',
+        body: `Your agent's core job is <strong>retrieval, not conversation</strong>. It has to pull the right answer from your existing content and deliver it in a clear, friendly way. Prioritize tools built around <code>RAG</code> (retrieval-augmented generation) — they let you point the bot at your content and let it answer with the exact wording you'd use yourself. The goal is <strong>accuracy over cleverness</strong>: a customer leaves satisfied when the hours, return policy, or pricing detail is right on the first try.`
+      },
+      leads: {
+        title: 'You need Form-filling logic',
+        body: `Your agent's core job is <strong>qualification, not education</strong>. It should guide visitors through a short sequence of questions — name, email, company size, budget, timeline — and then route that data somewhere useful (a CRM, a spreadsheet, or your inbox). Look for platforms that support <strong>conditional flows</strong> and webhook/Zapier integrations. Keep the form short: each extra field drops conversion, so ask only what you need to qualify and follow up.`
+      }
+    },
+    channel: {
+      website: {
+        title: 'Website widgets are the no-code shortcut',
+        body: `A website widget is the <strong>fastest path to launch</strong> — usually a single <code>&lt;script&gt;</code> tag you paste into your site. Tools like <strong>Chatbase</strong>, <strong>InsertChat</strong>, or <strong>Tidio</strong> let you upload content, style the bubble, and be live within an afternoon, no developer required. You get full control over look and feel, and analytics come baked in. Start here if you want a working agent this week.`
+      },
+      whatsapp: {
+        title: 'WhatsApp requires an API bridge',
+        body: `Meta doesn't let you plug a bot directly into WhatsApp — you need an approved <strong>Business API provider</strong> sitting in between. Platforms like <strong>ManyChat</strong>, <strong>Wati</strong>, or <strong>Respond.io</strong> handle that bridge for you and give you a visual builder on top. Expect a <strong>1–2 week onboarding window</strong> for phone number verification and business approval, plus per-conversation pricing. The payoff: you meet customers in the app they already check 20 times a day.`
+      }
+    },
+    knowledge: {
+      website: {
+        title: 'Use website scraping',
+        body: `Point the tool at your domain and let it <strong>crawl and ingest</strong> every page automatically. Most modern bot platforms (Chatbase, InsertChat, Voiceflow) have a one-click "import from URL" feature that handles this. The big win: when you update a page, you <strong>re-sync</strong> and the bot's knowledge updates too — no manual editing. Just make sure your site is clean and well-structured first; messy pages produce messy answers.`
+      },
+      pdfs: {
+        title: 'Use Vector Uploads',
+        body: `PDFs, Word docs, and transcripts need to be <strong>chunked and embedded</strong> into a vector database so the AI can search them semantically. Practically, you just drag-and-drop files into your bot platform — it handles the <code>embedding</code> and retrieval under the hood. Tip: <strong>split large PDFs by topic</strong> before uploading (one doc per product or policy), and strip out headers/footers. Cleaner inputs mean dramatically better answers.`
+      },
+      nothing: {
+        title: 'Start with a content sprint',
+        body: `Before touching any AI tool, <strong>write down your 20 most-asked questions and their answers</strong> in a single Google Doc. This is your MVP knowledge base. Then skim support emails, reviews, and sales call notes for the next 20. You'll get further in one afternoon of writing than in a week of tool evaluation — the bot is only as good as the content behind it, and generic pretrained knowledge isn't a substitute for your specific business facts.`
+      }
+    },
+    handoff: {
+      email: {
+        title: 'Email handoff — reliable but slow',
+        body: `An email fallback is <strong>simple and zero-friction to set up</strong>: the bot emails you a transcript whenever it's stuck or the user asks for a human. It works, but there's a catch — <strong>conversion decays fast</strong>. Every hour a prospect waits for your reply, the odds of closing drop. This path makes sense for support-heavy FAQ bots, less so when you're trying to book meetings or qualify hot leads.`
+      },
+      calendly: {
+        title: 'A Calendly link is the highest-converting escape hatch',
+        body: `For a small business, a direct <strong>Calendly (or Cal.com) link is the single highest-leverage move</strong> you can make. The moment the bot says "let me connect you with the owner" and drops a booking link, you've converted a curious visitor into a <strong>scheduled call</strong> — no email tag, no lost momentum. It also sets expectations: prospects who book are pre-qualified and committed. For lead-gen especially, this is the escape hatch that actually pays for the whole setup.`
+      }
+    }
+  };
+
+  const LABELS = {
+    goal: { faq: 'Answering FAQs', leads: 'Capturing Leads' },
+    channel: { website: 'Website Widget', whatsapp: 'WhatsApp / Social Media' },
+    knowledge: { website: 'Clean website', pdfs: 'PDFs / Docs', nothing: 'Nothing yet' },
+    handoff: { email: 'Email handoff', calendly: 'Calendly link' }
+  };
+
+  const state = { step: 1, goal: null, channel: null, knowledge: null, handoff: null };
+
+  function renderProgressDots() {
+    const container = document.getElementById('progressDots');
+    container.innerHTML = '';
+    STEPS.forEach((s, i) => {
+      const idx = i + 1;
+      const dot = document.createElement('div');
+      dot.className = 'progress-dot';
+      dot.setAttribute('data-idx', idx);
+      if (idx === state.step) dot.classList.add('active');
+      if (idx < state.step) dot.classList.add('completed');
+      dot.innerHTML = `
+        <div class="progress-dot-circle">${idx < state.step ? '✓' : idx}</div>
+        <div class="progress-dot-label">${s.label}</div>
+      `;
+      container.appendChild(dot);
+    });
+  }
+
+  function updateProgress() {
+    const pct = (state.step / STEPS.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('stepNum').textContent = state.step;
+    renderProgressDots();
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`.step[data-step="${n}"]`);
+    if (target) target.classList.add('active');
+    state.step = n;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (n === 5) renderSummary();
+  }
+
+  document.querySelectorAll('[data-options]').forEach(group => {
+    const key = group.dataset.options;
+    group.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        state[key] = opt.dataset.value;
+
+        const analysisEl = document.querySelector(`[data-analysis="${key}"]`);
+        const content = ANALYSIS[key][opt.dataset.value];
+        analysisEl.innerHTML = `
+          <div class="analysis-header">
+            <div class="analysis-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+              </svg>
+            </div>
+            <span class="analysis-label">Expert Analysis</span>
+          </div>
+          <div class="analysis-title">${content.title}</div>
+          <div class="analysis-body">${content.body}</div>
+        `;
+        requestAnimationFrame(() => { analysisEl.classList.add('visible'); });
+
+        const step = opt.closest('.step');
+        const nextBtn = step.querySelector('.btn-next');
+        if (nextBtn) nextBtn.disabled = false;
+      });
+    });
+  });
+
+  document.querySelectorAll('.btn-next').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.step < STEPS.length) showStep(state.step + 1);
+    });
+  });
+
+  document.querySelectorAll('.btn-back').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.step > 1) showStep(state.step - 1);
+    });
+  });
+
+  function buildRecommendations() {
+    const tools = [];
+    if (state.channel === 'website') {
+      tools.push({ name: 'Chatbase or InsertChat', desc: 'No-code website widget builders with URL and document ingestion.' });
+    } else {
+      tools.push({ name: 'ManyChat or Wati', desc: 'WhatsApp Business API bridge with visual bot builder.' });
+    }
+    if (state.knowledge === 'website') {
+      tools.push({ name: 'Website crawler (built-in)', desc: 'Auto-sync your site pages so the bot stays up to date.' });
+    } else if (state.knowledge === 'pdfs') {
+      tools.push({ name: 'Vector store upload', desc: 'Drag-and-drop PDFs and docs; platform handles embeddings.' });
+    } else {
+      tools.push({ name: 'Google Docs knowledge base', desc: 'Start with a single FAQ doc; grow it from support inbox patterns.' });
+    }
+    if (state.handoff === 'calendly') {
+      tools.push({ name: 'Calendly or Cal.com', desc: 'Embed your booking link as the human handoff step.' });
+    } else {
+      tools.push({ name: 'Email webhook (Zapier / Make)', desc: 'Forward unanswered conversations to your inbox instantly.' });
+    }
+    if (state.goal === 'leads') {
+      tools.push({ name: 'CRM connector', desc: 'Push qualified leads into HubSpot, Pipedrive, or a Google Sheet.' });
+    }
+    return tools;
+  }
+
+  function buildNextSteps() {
+    const steps = [];
+    if (state.knowledge === 'nothing') {
+      steps.push(`<strong>Write your top 20 FAQs</strong> in a single Google Doc — this is your MVP knowledge base before you touch any tool.`);
+    } else if (state.knowledge === 'pdfs') {
+      steps.push(`<strong>Clean and split your PDFs</strong> by topic (one per product or policy) and strip headers/footers for better retrieval.`);
+    } else {
+      steps.push(`<strong>Audit your top 10 pages</strong> for clarity and remove outdated content before running a full site crawl.`);
+    }
+    if (state.channel === 'website') {
+      steps.push(`<strong>Sign up for a no-code platform</strong> (Chatbase or InsertChat), import your content, and deploy the widget on one test page first.`);
+    } else {
+      steps.push(`<strong>Start the WhatsApp Business API verification</strong> via ManyChat or Wati — expect 1–2 weeks for Meta approval.`);
+    }
+    if (state.goal === 'leads') {
+      steps.push(`<strong>Design a short qualification flow</strong>: 3–5 questions max. Each extra field drops conversion.`);
+    } else {
+      steps.push(`<strong>Draft a tone-of-voice guide</strong> so the bot sounds like your brand — casual vs. formal, emoji usage, signature phrases.`);
+    }
+    if (state.handoff === 'calendly') {
+      steps.push(`<strong>Set up a dedicated Calendly event type</strong> for bot referrals so you can measure bot-sourced bookings separately.`);
+    } else {
+      steps.push(`<strong>Create a dedicated inbox or label</strong> for bot escalations and set a same-day reply SLA for yourself.`);
+    }
+    steps.push(`<strong>Run a 2-week pilot</strong> with real customers, review transcripts daily, and tune your knowledge base based on questions the bot fumbled.`);
+    return steps;
+  }
+
+  function renderSummary() {
+    const card = document.getElementById('summaryCard');
+    const tools = buildRecommendations();
+    const nextSteps = buildNextSteps();
+
+    card.innerHTML = `
+      <div class="summary-section">
+        <div class="summary-heading"><span class="summary-heading-dot"></span>Your Configuration</div>
+        <div class="summary-row">
+          <div class="summary-row-icon c-violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="summary-row-content">
+            <div class="summary-row-label">Main Task</div>
+            <div class="summary-row-value">${LABELS.goal[state.goal]}</div>
+          </div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-row-icon c-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="summary-row-content">
+            <div class="summary-row-label">Deployment Channel</div>
+            <div class="summary-row-value">${LABELS.channel[state.channel]}</div>
+          </div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-row-icon c-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="summary-row-content">
+            <div class="summary-row-label">Knowledge Source</div>
+            <div class="summary-row-value">${LABELS.knowledge[state.knowledge]}</div>
+          </div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-row-icon c-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          </div>
+          <div class="summary-row-content">
+            <div class="summary-row-label">Human Handoff</div>
+            <div class="summary-row-value">${LABELS.handoff[state.handoff]}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-section">
+        <div class="summary-heading"><span class="summary-heading-dot"></span>Recommended Tool Stack</div>
+        <div class="tool-stack">
+          ${tools.map(t => `
+            <div class="tool-item">
+              <div class="tool-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <div class="tool-item-body">
+                <div class="tool-item-name">${t.name}</div>
+                <div class="tool-item-desc">${t.desc}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="summary-section">
+        <div class="summary-heading"><span class="summary-heading-dot"></span>Your Next Steps</div>
+        <div class="next-steps">
+          ${nextSteps.map((s, i) => `
+            <div class="next-step">
+              <div class="next-step-number">${i + 1}</div>
+              <div class="next-step-text">${s}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function buildCopyText() {
+    const tools = buildRecommendations();
+    const nextSteps = buildNextSteps();
+    const stripHtml = (s) => s.replace(/<[^>]*>/g, '');
+
+    let txt = 'MY AI AGENT ROADMAP\n';
+    txt += '===================\n\n';
+    txt += 'CONFIGURATION\n';
+    txt += '-------------\n';
+    txt += `• Main Task: ${LABELS.goal[state.goal]}\n`;
+    txt += `• Deployment Channel: ${LABELS.channel[state.channel]}\n`;
+    txt += `• Knowledge Source: ${LABELS.knowledge[state.knowledge]}\n`;
+    txt += `• Human Handoff: ${LABELS.handoff[state.handoff]}\n\n`;
+    txt += 'RECOMMENDED TOOL STACK\n';
+    txt += '----------------------\n';
+    tools.forEach(t => { txt += `• ${t.name} — ${t.desc}\n`; });
+    txt += '\n';
+    txt += 'NEXT STEPS\n';
+    txt += '----------\n';
+    nextSteps.forEach((s, i) => { txt += `${i + 1}. ${stripHtml(s)}\n`; });
+    txt += '\nGenerated with AI Agent Roadmap by Swetlana AI — swetlanaai.com';
+    return txt;
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastText').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  document.getElementById('btnCopy').addEventListener('click', async () => {
+    const text = buildCopyText();
+    const btn = document.getElementById('btnCopy');
+    const span = btn.querySelector('span');
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.classList.add('copied');
+      span.textContent = 'Copied!';
+      showToast('Roadmap copied to clipboard');
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        span.textContent = 'Copy Roadmap';
+      }, 2400);
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast('Roadmap copied to clipboard'); }
+      catch (e) { showToast('Copy failed — please copy manually'); }
+      document.body.removeChild(ta);
+    }
+  });
+
+  document.getElementById('btnRestart').addEventListener('click', () => {
+    state.goal = null; state.channel = null; state.knowledge = null; state.handoff = null;
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.analysis').forEach(a => { a.classList.remove('visible'); a.innerHTML = ''; });
+    document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+    showStep(1);
+  });
+
+  updateProgress();
+
+  // ===== Explainer toggle =====
+  const explainer = document.getElementById('explainer');
+  const explainerToggle = document.getElementById('explainerToggle');
+  explainerToggle.addEventListener('click', () => {
+    const isOpen = explainer.classList.toggle('open');
+    explainerToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+</script>
+</body>
+</html>
